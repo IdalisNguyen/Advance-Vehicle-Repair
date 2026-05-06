@@ -21,7 +21,7 @@
                     <h3 class="mt-2 mb-3">ADVANCE VEHICLE REPAIR</h3>
                     <field name="groups_id"
                            widget="many2many_checkboxes"
-                           domain="[('category_id', '=', %(advance_vehicle_repair.module_category_avr)d)]"
+                           domain="[('category_id', '=', %(coreflow_advance_vehicle_repair.module_category_avr)d)]"
                            nolabel="1"/>
                 </div>
             </xpath>

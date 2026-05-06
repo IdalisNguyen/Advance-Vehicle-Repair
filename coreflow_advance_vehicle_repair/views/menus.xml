@@ -5,8 +5,8 @@
     <menuitem id="menu_avr_root"
               name="Vehicles Repair"
               sequence="50"
-              web_icon="advance_vehicle_repair,static/description/vehicle_repair_icon.png"
-              groups="advance_vehicle_repair.group_avr_technician"/>
+              web_icon="coreflow_advance_vehicle_repair,static/description/vehicle_repair_icon.png"
+              groups="coreflow_advance_vehicle_repair.group_avr_technician"/>
 
     <!-- ── Dashboard ─────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_dashboard"
@@ -14,7 +14,7 @@
               parent="menu_avr_root"
               action="action_avr_dashboard"
               sequence="10"
-              groups="advance_vehicle_repair.group_avr_receptionist"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_receptionist"/>
 
     <!-- ── Bookings ───────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_bookings"
@@ -22,14 +22,14 @@
               parent="menu_avr_root"
               action="action_avr_booking"
               sequence="20"
-              groups="advance_vehicle_repair.group_avr_receptionist"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_receptionist"/>
 
     <!-- ── Job Cards ──────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_job_cards"
               name="Job Cards"
               parent="menu_avr_root"
               sequence="30"
-              groups="advance_vehicle_repair.group_avr_technician"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_technician"/>
 
     <menuitem id="menu_avr_inspection_job_cards"
               name="Inspections"
@@ -48,7 +48,7 @@
               name="Customers"
               parent="menu_avr_root"
               sequence="40"
-              groups="advance_vehicle_repair.group_avr_receptionist"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_receptionist"/>
 
     <menuitem id="menu_avr_customer_list"
               name="Customers"
@@ -62,7 +62,7 @@
               parent="menu_avr_root"
               action="action_avr_team"
               sequence="50"
-              groups="advance_vehicle_repair.group_avr_supervisor"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_supervisor"/>
 
     <!-- ── Tasks ──────────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_tasks"
@@ -70,7 +70,7 @@
               parent="menu_avr_root"
               action="action_avr_tasks"
               sequence="60"
-              groups="advance_vehicle_repair.group_avr_technician"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_technician"/>
 
     <!-- ── Spare Parts ────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_spare_parts"
@@ -78,7 +78,7 @@
               parent="menu_avr_root"
               action="action_avr_spare_part"
               sequence="70"
-              groups="advance_vehicle_repair.group_avr_supervisor"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_supervisor"/>
 
     <!-- ── Services ───────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_services"
@@ -86,7 +86,7 @@
               parent="menu_avr_root"
               action="action_avr_service"
               sequence="80"
-              groups="advance_vehicle_repair.group_avr_supervisor"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_supervisor"/>
 
     <!-- ── Vehicles ───────────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_vehicles"
@@ -94,14 +94,14 @@
               parent="menu_avr_root"
               action="action_avr_vehicle"
               sequence="90"
-              groups="advance_vehicle_repair.group_avr_receptionist"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_receptionist"/>
 
     <!-- ── Configurations ────────────────────────────────────────────────────── -->
     <menuitem id="menu_avr_config"
               name="Configurations"
               parent="menu_avr_root"
               sequence="100"
-              groups="advance_vehicle_repair.group_avr_manager"/>
+              groups="coreflow_advance_vehicle_repair.group_avr_manager"/>
 
     <menuitem id="menu_avr_config_inspection_templates"
               name="Inspection Templates"

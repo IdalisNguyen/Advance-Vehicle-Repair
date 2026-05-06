@@ -13,10 +13,10 @@ class ResUsers(models.Model):
 
     def _compute_avr_role(self):
         get = lambda ref: self.env.ref(ref, raise_if_not_found=False)
-        g_manager = get('advance_vehicle_repair.group_avr_manager')
-        g_supervisor = get('advance_vehicle_repair.group_avr_supervisor')
-        g_receptionist = get('advance_vehicle_repair.group_avr_receptionist')
-        g_technician = get('advance_vehicle_repair.group_avr_technician')
+        g_manager = get('coreflow_advance_vehicle_repair.group_avr_manager')
+        g_supervisor = get('coreflow_advance_vehicle_repair.group_avr_supervisor')
+        g_receptionist = get('coreflow_advance_vehicle_repair.group_avr_receptionist')
+        g_technician = get('coreflow_advance_vehicle_repair.group_avr_technician')
         for user in self:
             groups = user.groups_id
             if g_manager and g_manager in groups:

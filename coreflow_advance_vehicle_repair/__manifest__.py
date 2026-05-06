@@ -19,6 +19,9 @@
     'license': 'LGPL-3',
     'price': 89.0,
     'currency': 'USD',
+    'images': [
+        'static/description/dashboard.png',
+    ],
     'depends': [
         'base', 'mail', 'fleet', 'project',
         'sale_management', 'website', 'hr', 'stock',
@@ -58,3 +61,4 @@
     'installable': True,
     'application': True,
 }
+

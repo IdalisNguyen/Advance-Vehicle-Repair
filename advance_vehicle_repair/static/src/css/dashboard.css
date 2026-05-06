@@ -1,0 +1,90 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   AVR Dashboard – Backend Styles
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.avr-dashboard {
+    padding: 24px;
+    background: #fdf8f2;
+    min-height: 100%;
+}
+
+.avr-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+
+/* ── KPI Cards ─────────────────────────────────────────────────────────────── */
+.avr-kpi-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    cursor: pointer;
+    transition: box-shadow .2s, transform .15s;
+}
+.avr-kpi-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+.avr-kpi-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #8a7060;
+    margin-bottom: 6px;
+}
+.avr-kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d1a0e;
+}
+.avr-kpi-sub {
+    font-size: 11px;
+    margin-top: 4px;
+}
+.avr-kpi-revenue .avr-kpi-value {
+    color: #c55a11;
+}
+
+/* ── Generic card ──────────────────────────────────────────────────────────── */
+.avr-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    overflow: hidden;
+}
+.avr-card-header {
+    font-weight: 600;
+    font-size: 13px;
+    color: #5a3e28;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0e8de;
+    background: #fff9f4;
+}
+
+/* ── Activity list ─────────────────────────────────────────────────────────── */
+.avr-activity-list {
+    max-height: 280px;
+    overflow-y: auto;
+}
+.avr-activity-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f9f4ef;
+}
+.avr-activity-item:last-child { border-bottom: none; }
+.avr-activity-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #fff3e0;
+    display: flex; align-items: center; justify-content: center;
+    color: #e07b3a;
+    flex-shrink: 0;
+}
+.avr-activity-body { flex: 1; min-width: 0; }

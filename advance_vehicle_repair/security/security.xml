@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ── Category ──────────────────────────────────────────────────────── -->
+        <record id="module_category_avr" model="ir.module.category">
+            <field name="name">Advance Vehicle Repair</field>
+            <field name="description">Manage vehicle repair operations</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- ── Groups ────────────────────────────────────────────────────────── -->
+        <record id="group_avr_technician" model="res.groups">
+            <field name="name">Technician</field>
+            <field name="category_id" ref="module_category_avr"/>
+            <field name="comment">Can view and update assigned job cards and tasks.</field>
+        </record>
+
+        <record id="group_avr_receptionist" model="res.groups">
+            <field name="name">Receptionist</field>
+            <field name="category_id" ref="module_category_avr"/>
+            <field name="implied_ids" eval="[(4, ref('group_avr_technician'))]"/>
+            <field name="comment">Can create bookings, register vehicles and customers.</field>
+        </record>
+
+        <record id="group_avr_supervisor" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="module_category_avr"/>
+            <field name="implied_ids" eval="[(4, ref('group_avr_receptionist'))]"/>
+            <field name="comment">Can approve job cards and manage teams.</field>
+        </record>
+
+        <record id="group_avr_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_avr"/>
+            <field name="implied_ids" eval="[(4, ref('group_avr_supervisor'))]"/>
+            <field name="comment">Full access to all AVR features including configuration.</field>
+        </record>
+
+    </data>
+</odoo>

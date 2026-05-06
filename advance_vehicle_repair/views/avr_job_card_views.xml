@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         INSPECTION JOB CARD FORM
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_avr_inspection_job_card_form" model="ir.ui.view">
+        <field name="name">avr.job.card.inspection.form</field>
+        <field name="model">avr.job.card</field>
+        <field name="arch" type="xml">
+            <form string="Inspection Job Card">
+                <header>
+                    <button name="action_insp_start" type="object"
+                            string="Start Inspection" class="btn-primary"
+                            invisible="inspection_state != 'new'"/>
+                    <button name="action_insp_review" type="object"
+                            string="Send for Review" class="btn-secondary"
+                            invisible="inspection_state != 'in_progress'"/>
+                    <button name="action_insp_complete" type="object"
+                            string="Mark Completed" class="btn-success"
+                            invisible="inspection_state != 'in_review'"/>
+                    <button name="action_send_approval_mail" type="object"
+                            string="Send Approval Mail" class="btn-secondary"
+                            invisible="approval_mail_sent == True"/>
+                    <button name="action_insp_lock" type="object" string="Lock"
+                            invisible="inspection_state != 'completed'"/>
+                    <button name="action_insp_cancel" type="object" string="Cancel"
+                            invisible="inspection_state in ('cancelled', 'completed', 'locked')"/>
+                    <field name="inspection_state" widget="statusbar"
+                           statusbar_visible="new,in_progress,in_review,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-usd"
+                                invisible="sale_order_count == 0">
+                            <field name="sale_order_count" widget="statinfo" string="Sale Order"/>
+                        </button>
+                        <button name="action_view_tasks" type="object"
+                                class="oe_stat_button" icon="fa-tasks">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Booking Details">
+                            <field name="booking_id"/>
+                            <field name="date"/>
+                            <field name="inspection_report_type"/>
+                            <field name="type_of_inspection"/>
+                            <field name="repair_type"/>
+                        </group>
+                        <group string="Inspection Charges">
+                            <field name="inspection_charge_type" widget="radio"/>
+                            <field name="inspection_charges"/>
+                        </group>
+                    </group>
+                    <group string="Vehicle Details">
+                        <group>
+                            <field name="vehicle_source" widget="radio"/>
+                            <field name="customer_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="brand"/>
+                            <field name="model_name" string="Model"/>
+                            <field name="vin_number"/>
+                        </group>
+                        <group>
+                            <field name="registration_no"/>
+                            <field name="fuel_type"/>
+                            <field name="year"/>
+                            <field name="last_odometer"/>
+                            <field name="transmission_type" widget="radio"/>
+                        </group>
+                    </group>
+                    <group string="Address Details">
+                        <group>
+                            <field name="street"/>
+                            <field name="city"/>
+                            <field name="state_id"/>
+                        </group>
+                        <group>
+                            <field name="zip_code"/>
+                            <field name="country_id"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+                    <group string="Company Details">
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="inspected_by"/>
+                    </group>
+                    <notebook>
+                        <page string="Inspections">
+                            <group>
+                                <field name="inspection_template_id"
+                                       options="{'no_create': False}"/>
+                            </group>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-3">
+                                    <span class="badge bg-success">
+                                        &#x25CF; Checked OK / Good at this time
+                                    </span>
+                                </div>
+                                <div class="col-3">
+                                    <span class="badge bg-warning text-dark">
+                                        &#x25CF; Requires future attention
+                                    </span>
+                                </div>
+                                <div class="col-3">
+                                    <span class="badge bg-danger">
+                                        &#x25CF; Requires immediate attention
+                                    </span>
+                                </div>
+                            </div>
+                            <field name="inspection_line_ids">
+                                <list editable="bottom"
+                                      decoration-success="condition == 'ok'"
+                                      decoration-warning="condition == 'attention'"
+                                      decoration-danger="condition == 'immediate'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="category"/>
+                                    <field name="part"/>
+                                    <field name="condition"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Authorization Details">
+                            <group>
+                                <group string="Customer">
+                                    <field name="customer_observations"/>
+                                    <field name="customer_signature" widget="signature"/>
+                                </group>
+                                <group string="Technician">
+                                    <field name="technician_id"/>
+                                    <field name="technician_signature" widget="signature"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Images">
+                            <field name="image_ids" widget="many2many_binary"
+                                   string="Vehicle Images"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="internal_notes" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         REPAIR JOB CARD FORM
+    ══════════════════════════════════════════════════════════════════════════ -->
+    <record id="view_avr_repair_job_card_form" model="ir.ui.view">
+        <field name="name">avr.job.card.repair.form</field>
+        <field name="model">avr.job.card</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <form string="Repair Job Card">
+                <header>
+                    <button name="action_repair_assign" type="object"
+                            string="Assign to Technician" class="btn-primary"
+                            invisible="repair_state != 'new'"/>
+                    <button name="action_repair_diagnose" type="object"
+                            string="In Diagnosis" class="btn-secondary"
+                            invisible="repair_state != 'assign_technician'"/>
+                    <button name="action_repair_supervisor" type="object"
+                            string="Supervisor Inspection"
+                            invisible="repair_state != 'in_diagnosis'"/>
+                    <button name="action_repair_complete" type="object"
+                            string="Mark Completed" class="btn-success"
+                            invisible="repair_state != 'supervisor_inspection'"/>
+                    <button name="action_create_quotation" type="object"
+                            string="Create Quotation" class="btn-secondary"
+                            invisible="sale_order_id != False"/>
+                    <button name="action_repair_hold" type="object" string="Hold"
+                            invisible="repair_state in ('hold', 'completed', 'locked', 'reject', 'cancel')"/>
+                    <button name="action_repair_reject" type="object" string="Reject"
+                            invisible="repair_state in ('completed', 'locked', 'reject', 'cancel')"/>
+                    <button name="action_repair_cancel" type="object" string="Cancel"
+                            invisible="repair_state in ('completed', 'locked', 'cancel')"/>
+                    <field name="repair_state" widget="statusbar" options="{'clickable': '1'}" readonly="0"
+                           statusbar_visible="new,assign_technician,in_diagnosis,supervisor_inspection,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-usd"
+                                invisible="sale_order_count == 0">
+                            <field name="sale_order_count" widget="statinfo" string="Sale Order"/>
+                        </button>
+                        <button name="action_view_tasks" type="object"
+                                class="oe_stat_button" icon="fa-tasks">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                        <button name="%(action_avr_booking)s" type="action"
+                                class="oe_stat_button" icon="fa-calendar"
+                                invisible="booking_id == False">
+                            <span class="o_stat_text">Booking</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Vehicle Booking Details">
+                            <field name="booking_id"/>
+                            <field name="vehicle_source" widget="radio"/>
+                            <field name="date"/>
+                            <field name="sale_order_id" readonly="1"/>
+                        </group>
+                        <group string="Inspection Date">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <group string="Vehicle Details">
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="brand"/>
+                            <field name="model_name" string="Model"/>
+                            <field name="vin_number"/>
+                            <field name="year"/>
+                        </group>
+                        <group>
+                            <field name="registration_no"/>
+                            <field name="fuel_type"/>
+                            <field name="last_odometer"/>
+                            <field name="transmission_type" widget="radio"/>
+                            <field name="vehicle_color"/>
+                            <field name="vehicle_grade"/>
+                            <field name="warranty"/>
+                        </group>
+                    </group>
+                    <group string="Address Details">
+                        <group>
+                            <field name="street"/>
+                            <field name="city"/>
+                            <field name="state_id"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="zip_code"/>
+                            <field name="country_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Services">
+                            <field name="service_ids">
+                                <list editable="bottom">
+                                    <field name="service_id"/>
+                                    <field name="team_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal" sum="Total"/>
+                                    <field name="task_id" optional="show"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_service_amount" string="Total Services"/>
+                            </group>
+                        </page>
+                        <page string="Spare Parts">
+                            <field name="spare_part_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="lot_id" optional="show"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal" sum="Total"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_spare_part_amount" string="Total Parts"/>
+                                <field name="total_amount" string="Grand Total"/>
+                            </group>
+                        </page>
+                        <page string="Additional Information">
+                            <group>
+                                <field name="technician_id"/>
+                                <field name="supervisor_id"/>
+                                <field name="team_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </page>
+                        <page string="Authorization Details">
+                            <group>
+                                <group string="Customer">
+                                    <field name="customer_observations"/>
+                                    <field name="customer_signature" widget="signature"/>
+                                </group>
+                                <group string="Technician">
+                                    <field name="technician_signature" widget="signature"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Images">
+                            <field name="image_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="internal_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Inspection Job Card List ──────────────────────────────────────────── -->
+    <record id="view_avr_inspection_list" model="ir.ui.view">
+        <field name="name">avr.job.card.inspection.list</field>
+        <field name="model">avr.job.card</field>
+        <field name="arch" type="xml">
+            <list string="Inspection Job Cards"
+                  decoration-info="inspection_state == 'new'"
+                  decoration-warning="inspection_state == 'in_review'"
+                  decoration-success="inspection_state == 'completed'"
+                  decoration-danger="inspection_state == 'cancelled'">
+                <field name="name" string="Inspection No"/>
+                <field name="date"/>
+                <field name="brand"/>
+                <field name="model_name" string="Model"/>
+                <field name="registration_no"/>
+                <field name="inspection_report_type" string="Inspection Report Type"/>
+                <field name="type_of_inspection" string="Type of Inspection"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="inspection_state" widget="badge" string="Status"
+                       decoration-info="inspection_state == 'new'"
+                       decoration-warning="inspection_state == 'in_review'"
+                       decoration-success="inspection_state == 'completed'"
+                       decoration-danger="inspection_state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Repair Job Card List ──────────────────────────────────────────────── -->
+    <record id="view_avr_repair_list" model="ir.ui.view">
+        <field name="name">avr.job.card.repair.list</field>
+        <field name="model">avr.job.card</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <list string="Repair Job Cards"
+                  decoration-info="repair_state == 'new'"
+                  decoration-success="repair_state == 'completed'"
+                  decoration-danger="repair_state in ('reject', 'cancel')">
+                <field name="name" string="Sequence No"/>
+                <field name="date"/>
+                <field name="brand"/>
+                <field name="model_name" string="Model"/>
+                <field name="fuel_type"/>
+                <field name="registration_no"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="repair_state" widget="badge" string="Status"
+                       decoration-info="repair_state == 'new'"
+                       decoration-warning="repair_state in ('assign_technician', 'in_diagnosis', 'supervisor_inspection', 'hold')"
+                       decoration-success="repair_state == 'completed'"
+                       decoration-danger="repair_state in ('reject', 'cancel')"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Search ────────────────────────────────────────────────────────────── -->
+    <record id="view_avr_job_card_search" model="ir.ui.view">
+        <field name="name">avr.job.card.search</field>
+        <field name="model">avr.job.card</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="brand"/>
+                <field name="registration_no"/>
+                <separator/>
+                <filter string="New"         name="f_new"  domain="[('state','=','new')]"/>
+                <filter string="In Progress" name="f_wip"  domain="[('state','in',['in_progress','in_diagnosis','assign_technician'])]"/>
+                <filter string="Completed"   name="f_done" domain="[('state','=','completed')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="gb_customer" context="{'group_by':'customer_id'}"/>
+                    <filter string="Brand"    name="gb_brand"    context="{'group_by':'brand'}"/>
+                    <filter string="Status"   name="gb_state"    context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Actions ───────────────────────────────────────────────────────────── -->
+    <record id="action_avr_inspection_job_card" model="ir.actions.act_window">
+        <field name="name">Inspection Job Cards</field>
+        <field name="res_model">avr.job.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('job_card_type','=','inspection')]</field>
+        <field name="context">{'default_job_card_type': 'inspection'}</field>
+        <field name="view_ids" eval="[(5,0,0),
+            (0,0,{'view_mode':'list','view_id':ref('view_avr_inspection_list')}),
+            (0,0,{'view_mode':'form','view_id':ref('view_avr_inspection_job_card_form')})]"/>
+        <field name="search_view_id" ref="view_avr_job_card_search"/>
+    </record>
+
+    <record id="action_avr_repair_job_card" model="ir.actions.act_window">
+        <field name="name">Repair Job Cards</field>
+        <field name="res_model">avr.job.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('job_card_type','=','repair')]</field>
+        <field name="context">{'default_job_card_type': 'repair'}</field>
+        <field name="view_ids" eval="[(5,0,0),
+            (0,0,{'view_mode':'list','view_id':ref('view_avr_repair_list')}),
+            (0,0,{'view_mode':'form','view_id':ref('view_avr_repair_job_card_form')})]"/>
+        <field name="search_view_id" ref="view_avr_job_card_search"/>
+    </record>
+
+</odoo>

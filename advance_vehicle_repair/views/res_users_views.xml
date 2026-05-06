@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Thêm section "ADVANCE VEHICLE REPAIR" vào tab Access Rights của user form.
+
+        Cách đúng trong Odoo 18:
+        - KHÔNG dùng sel_groups_xxx (trường tự sinh theo DB ID, không thể hardcode)
+        - Dùng groups_id widget="many2many_checkboxes" + domain lọc theo category
+          (domain dùng %(module.xml_id)d — KHÔNG dùng ref() trong domain vì web client
+          evaluate bằng py_js, không có hàm ref)
+          → Odoo tự render ra 4 checkbox: Manager / Supervisor / Receptionist / Technician
+    -->
+    <record id="view_res_users_avr_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.avr.access.rights.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div name="o_avr_groups_configuration" class="mt-3">
+                    <h3 class="mt-2 mb-3">ADVANCE VEHICLE REPAIR</h3>
+                    <field name="groups_id"
+                           widget="many2many_checkboxes"
+                           domain="[('category_id', '=', %(advance_vehicle_repair.module_category_avr)d)]"
+                           nolabel="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

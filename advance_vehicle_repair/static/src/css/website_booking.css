@@ -1,0 +1,115 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   AVR Website Booking – Frontend Styles
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.avr-booking-page {
+    background: #fdf7f0;
+    min-height: 100vh;
+}
+
+/* ── Header logo ───────────────────────────────────────────────────────────── */
+.avr-booking-header {
+    padding: 20px 0;
+}
+.avr-logo-icon {
+    width: 60px; height: 60px;
+    background: #3c2a1a;
+    border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #e07b3a;
+}
+
+/* ── Progress steps ────────────────────────────────────────────────────────── */
+.avr-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+.avr-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    color: #aaa;
+    min-width: 80px;
+}
+.avr-step.active { color: #e07b3a; font-weight: 600; }
+.avr-step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #e0dbd5;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 4px;
+}
+.avr-step.active .avr-step-num {
+    background: #e07b3a;
+}
+.avr-step-line {
+    flex: 1;
+    height: 2px;
+    background: #e0dbd5;
+    min-width: 40px;
+    margin-top: -14px;
+}
+
+/* ── Section title ─────────────────────────────────────────────────────────── */
+.avr-section-title {
+    color: #3c2a1a;
+    font-weight: 700;
+}
+.avr-step-badge {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #e07b3a;
+    color: #fff;
+    font-size: 13px; font-weight: 700;
+    margin-right: 8px;
+}
+
+/* ── Service type cards ────────────────────────────────────────────────────── */
+.avr-service-card {
+    cursor: pointer;
+}
+.avr-service-card-inner {
+    border: 2px solid #e8e0d8;
+    border-radius: 12px;
+    transition: border-color .2s, box-shadow .2s;
+}
+.avr-service-card input:checked + .avr-service-card-inner,
+.avr-service-card.selected .avr-service-card-inner {
+    border-color: #e07b3a;
+    background: #fff8f2;
+    box-shadow: 0 0 0 3px rgba(224,123,58,.15);
+}
+
+/* ── Confirmation page ─────────────────────────────────────────────────────── */
+.avr-confirmed-icon { color: #5cb85c; }
+.avr-booking-ref .badge { font-size: 1rem; }
+
+/* ── Cards & inputs ────────────────────────────────────────────────────────── */
+.avr-booking-page .card {
+    border-radius: 16px;
+}
+.avr-booking-page .form-control,
+.avr-booking-page .form-select {
+    border-radius: 8px;
+    border-color: #d8cfc6;
+}
+.avr-booking-page .form-control:focus,
+.avr-booking-page .form-select:focus {
+    border-color: #e07b3a;
+    box-shadow: 0 0 0 3px rgba(224,123,58,.15);
+}
+.avr-booking-page .btn-warning {
+    background: #e07b3a;
+    border-color: #e07b3a;
+    color: #fff;
+}
+.avr-booking-page .btn-warning:hover {
+    background: #c9662a;
+    border-color: #c9662a;
+}

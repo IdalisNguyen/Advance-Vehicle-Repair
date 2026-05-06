@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_avr_service_form" model="ir.ui.view">
+        <field name="name">avr.service.form</field>
+        <field name="model">avr.service</field>
+        <field name="arch" type="xml">
+            <form string="Service">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="service_type"/>
+                            <field name="duration"/>
+                        </group>
+                        <group>
+                            <field name="list_price"/>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_avr_service_list" model="ir.ui.view">
+        <field name="name">avr.service.list</field>
+        <field name="model">avr.service</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="service_type"/>
+                <field name="list_price"/>
+                <field name="duration"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_avr_service" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">avr.service</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

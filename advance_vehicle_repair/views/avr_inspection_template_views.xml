@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_avr_inspection_template_form" model="ir.ui.view">
+        <field name="name">avr.inspection.template.form</field>
+        <field name="model">avr.inspection.template</field>
+        <field name="arch" type="xml">
+            <form string="Inspection Template">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="template_type"/>
+                    </group>
+                    <notebook>
+                        <page string="Inspection Items">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="category"/>
+                                    <field name="part"/>
+                                    <field name="description"/>
+                                    <field name="is_required"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_avr_inspection_template_list" model="ir.ui.view">
+        <field name="name">avr.inspection.template.list</field>
+        <field name="model">avr.inspection.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="template_type"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_avr_inspection_template" model="ir.actions.act_window">
+        <field name="name">Inspection Templates</field>
+        <field name="res_model">avr.inspection.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend task form to show job card info -->
+    <record id="view_avr_task_form_inherit" model="ir.ui.view">
+        <field name="name">project.task.avr.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="job_card_id"/>
+                <field name="team_id"/>
+                <field name="service_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- AVR Tasks kanban (linked to job cards) -->
+    <record id="view_avr_task_kanban" model="ir.ui.view">
+        <field name="name">avr.task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="user_ids" class="o_avr_task_kanban">
+                <field name="name"/>
+                <field name="user_ids"/>
+                <field name="job_card_id"/>
+                <field name="team_id"/>
+                <field name="service_id"/>
+                <field name="vehicle_brand"/>
+                <field name="vehicle_model"/>
+                <field name="vehicle_registration_no"/>
+                <field name="stage_id"/>
+                <field name="partner_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div><strong><field name="name"/></strong></div>
+                                <div class="text-muted">
+                                    <field name="partner_id"/>
+                                </div>
+                                <div>
+                                    <span class="badge bg-secondary">
+                                        <field name="vehicle_brand"/>
+                                        <t t-if="record.vehicle_model.value"> /
+                                            <field name="vehicle_model"/>
+                                        </t>
+                                    </span>
+                                </div>
+                                <div t-if="record.team_id.value" class="text-muted small">
+                                    <field name="team_id"/>
+                                </div>
+                                <div t-if="record.job_card_id.value">
+                                    <a><field name="job_card_id"/></a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_avr_task_list" model="ir.ui.view">
+        <field name="name">avr.task.list</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <list string="Tasks">
+                <field name="name"/>
+                <field name="job_card_id"/>
+                <field name="team_id"/>
+                <field name="service_id"/>
+                <field name="user_ids" widget="many2many_avatar_user"/>
+                <field name="vehicle_brand" string="Brand"/>
+                <field name="vehicle_model" string="Model"/>
+                <field name="vehicle_fuel_type" string="Fuel Type"/>
+                <field name="vehicle_registration_no" string="Registration No"/>
+                <field name="vehicle_vin" string="VIN No."/>
+                <field name="vehicle_transmission" string="Transmission"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="stage_id" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_avr_task_search" model="ir.ui.view">
+        <field name="name">avr.task.search</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="job_card_id"/>
+                <field name="team_id"/>
+                <field name="user_ids"/>
+                <field name="partner_id"/>
+                <field name="vehicle_registration_no"/>
+                <separator/>
+                <filter string="My Tasks" name="f_my" domain="[('user_ids','=',uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Assignee" name="gb_user" context="{'group_by':'user_ids'}"/>
+                    <filter string="Team" name="gb_team" context="{'group_by':'team_id'}"/>
+                    <filter string="Job Card" name="gb_jc" context="{'group_by':'job_card_id'}"/>
+                    <filter string="Stage" name="gb_stage" context="{'group_by':'stage_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_avr_tasks" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('job_card_id','!=',False)]</field>
+        <field name="view_ids" eval="[(5,0,0),
+            (0,0,{'view_mode':'kanban','view_id':ref('view_avr_task_kanban')}),
+            (0,0,{'view_mode':'list','view_id':ref('view_avr_task_list')})]"/>
+        <field name="search_view_id" ref="view_avr_task_search"/>
+    </record>
+
+</odoo>

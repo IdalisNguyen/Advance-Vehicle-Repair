@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Vehicle Form ──────────────────────────────────────────────────────── -->
+    <record id="view_avr_vehicle_form" model="ir.ui.view">
+        <field name="name">avr.vehicle.form</field>
+        <field name="model">avr.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Registered Vehicle">
+                <header/>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_bookings" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="booking_count" widget="statinfo" string="Bookings"/>
+                        </button>
+                        <button name="action_view_inspections" type="object"
+                                class="oe_stat_button" icon="fa-search">
+                            <field name="inspection_count" widget="statinfo" string="Inspections"/>
+                        </button>
+                        <button name="action_view_repairs" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="repair_count" widget="statinfo" string="Repairs"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Vehicle Details">
+                            <field name="customer_id"/>
+                            <field name="brand"/>
+                            <field name="model"/>
+                            <field name="make"/>
+                            <field name="year"/>
+                            <field name="fuel_type"/>
+                            <field name="transmission_type" widget="radio"/>
+                        </group>
+                        <group string="Identification">
+                            <field name="vin_number"/>
+                            <field name="registration_no"/>
+                            <field name="vehicle_color"/>
+                            <field name="last_odometer"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Odometer History">
+                            <field name="odometer_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="value"/>
+                                    <field name="unit"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Vehicle List ─────────────────────────────────────────────────────── -->
+    <record id="view_avr_vehicle_list" model="ir.ui.view">
+        <field name="name">avr.vehicle.list</field>
+        <field name="model">avr.vehicle</field>
+        <field name="arch" type="xml">
+            <list string="Registered Vehicles" decoration-muted="not active">
+                <field name="customer_id"/>
+                <field name="brand"/>
+                <field name="model"/>
+                <field name="fuel_type"/>
+                <field name="registration_no"/>
+                <field name="vin_number"/>
+                <field name="transmission_type"/>
+                <field name="last_odometer"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Vehicle Search ───────────────────────────────────────────────────── -->
+    <record id="view_avr_vehicle_search" model="ir.ui.view">
+        <field name="name">avr.vehicle.search</field>
+        <field name="model">avr.vehicle</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_id"/>
+                <field name="brand"/>
+                <field name="model"/>
+                <field name="registration_no"/>
+                <field name="vin_number"/>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="gb_customer" context="{'group_by':'customer_id'}"/>
+                    <filter string="Brand" name="gb_brand" context="{'group_by':'brand'}"/>
+                    <filter string="Fuel Type" name="gb_fuel" context="{'group_by':'fuel_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Action ───────────────────────────────────────────────────────────── -->
+    <record id="action_avr_vehicle" model="ir.actions.act_window">
+        <field name="name">Register Vehicles</field>
+        <field name="res_model">avr.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_avr_vehicle_search"/>
+    </record>
+
+</odoo>

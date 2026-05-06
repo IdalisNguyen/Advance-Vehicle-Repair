@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Dashboard client action only - user access rights moved to res_users_views.xml -->
+    <record id="action_avr_dashboard" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">avr_dashboard</field>
+    </record>
+
+</odoo>

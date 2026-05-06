@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Default Classic Inspection Template -->
+        <record id="avr_insp_template_classic" model="avr.inspection.template">
+            <field name="name">Classic Full Vehicle Inspection</field>
+            <field name="template_type">classic</field>
+        </record>
+
+        <!-- Exterior -->
+        <record id="avr_insp_line_c1" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">10</field>
+            <field name="part">Body &amp; Paintwork (Exterior)</field>
+            <field name="category">exterior</field>
+        </record>
+        <record id="avr_insp_line_c2" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">20</field>
+            <field name="part">Windows &amp; Mirrors</field>
+            <field name="category">exterior</field>
+        </record>
+        <record id="avr_insp_line_c3" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">30</field>
+            <field name="part">Lights (Front, Rear, Indicators)</field>
+            <field name="category">exterior</field>
+        </record>
+
+        <!-- Interior -->
+        <record id="avr_insp_line_c4" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">40</field>
+            <field name="part">Dashboard &amp; Controls</field>
+            <field name="category">interior</field>
+        </record>
+        <record id="avr_insp_line_c5" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">50</field>
+            <field name="part">Air Conditioning &amp; Heating</field>
+            <field name="category">interior</field>
+        </record>
+
+        <!-- Under Hood -->
+        <record id="avr_insp_line_c6" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">60</field>
+            <field name="part">Engine Oil &amp; Filters</field>
+            <field name="category">under_hood</field>
+        </record>
+        <record id="avr_insp_line_c7" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">70</field>
+            <field name="part">Cooling System (Radiator / Coolant)</field>
+            <field name="category">under_hood</field>
+        </record>
+        <record id="avr_insp_line_c8" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">80</field>
+            <field name="part">Battery &amp; Electrical</field>
+            <field name="category">under_hood</field>
+        </record>
+
+        <!-- Under Vehicle -->
+        <record id="avr_insp_line_c9" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">90</field>
+            <field name="part">Brakes (Front &amp; Rear)</field>
+            <field name="category">under_vehicle</field>
+        </record>
+        <record id="avr_insp_line_c10" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">100</field>
+            <field name="part">Suspension &amp; Steering</field>
+            <field name="category">under_vehicle</field>
+        </record>
+        <record id="avr_insp_line_c11" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">110</field>
+            <field name="part">Exhaust System</field>
+            <field name="category">under_vehicle</field>
+        </record>
+
+        <!-- Wheels -->
+        <record id="avr_insp_line_c12" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">120</field>
+            <field name="part">Tyres (Depth &amp; Pressure)</field>
+            <field name="category">wheels</field>
+        </record>
+
+        <!-- Transmission -->
+        <record id="avr_insp_line_c13" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">130</field>
+            <field name="part">Transmission / Differential</field>
+            <field name="category">transmission</field>
+        </record>
+        <record id="avr_insp_line_c14" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_classic"/>
+            <field name="sequence">140</field>
+            <field name="part">Liquor and Liquid Tester</field>
+            <field name="category">transmission</field>
+        </record>
+
+        <!-- Advanced Inspection Template -->
+        <record id="avr_insp_template_advanced" model="avr.inspection.template">
+            <field name="name">Advanced Inspection</field>
+            <field name="template_type">advanced</field>
+        </record>
+
+        <record id="avr_insp_adv_1" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_advanced"/>
+            <field name="sequence">10</field>
+            <field name="part">OBD-II Diagnostic Scan</field>
+            <field name="category">under_hood</field>
+        </record>
+        <record id="avr_insp_adv_2" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_advanced"/>
+            <field name="sequence">20</field>
+            <field name="part">Full Compression Test</field>
+            <field name="category">under_hood</field>
+        </record>
+        <record id="avr_insp_adv_3" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_advanced"/>
+            <field name="sequence">30</field>
+            <field name="part">ABS &amp; Electronic Systems</field>
+            <field name="category">under_vehicle</field>
+        </record>
+        <record id="avr_insp_adv_4" model="avr.inspection.template.line">
+            <field name="template_id" ref="avr_insp_template_advanced"/>
+            <field name="sequence">40</field>
+            <field name="part">Fuel System Pressure Test</field>
+            <field name="category">under_hood</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo users -->
+        <record id="user_avr_receptionist_demo" model="res.users">
+            <field name="name">AVR Receptionist Demo</field>
+            <field name="login">avr.receptionist.demo</field>
+            <field name="email">receptionist.demo@avr.local</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
+            <field name="groups_id" eval="[
+                Command.link(ref('base.group_user')),
+                Command.link(ref('advance_vehicle_repair.group_avr_receptionist'))
+            ]"/>
+        </record>
+
+        <record id="user_avr_supervisor_demo" model="res.users">
+            <field name="name">AVR Supervisor Demo</field>
+            <field name="login">avr.supervisor.demo</field>
+            <field name="email">supervisor.demo@avr.local</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
+            <field name="groups_id" eval="[
+                Command.link(ref('base.group_user')),
+                Command.link(ref('advance_vehicle_repair.group_avr_supervisor'))
+            ]"/>
+        </record>
+
+        <record id="user_avr_technician_demo" model="res.users">
+            <field name="name">AVR Technician Demo</field>
+            <field name="login">avr.technician.demo</field>
+            <field name="email">technician.demo@avr.local</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
+            <field name="groups_id" eval="[
+                Command.link(ref('base.group_user')),
+                Command.link(ref('advance_vehicle_repair.group_avr_technician'))
+            ]"/>
+        </record>
+
+        <!-- Demo customers -->
+        <record id="partner_avr_demo_customer_1" model="res.partner">
+            <field name="name">Nguyen Van An</field>
+            <field name="phone">0901000001</field>
+            <field name="email">an.customer@avr.local</field>
+            <field name="street">12 Nguyen Trai</field>
+            <field name="city">Ho Chi Minh City</field>
+            <field name="country_id" ref="base.vn"/>
+            <field name="customer_rank">1</field>
+        </record>
+
+        <record id="partner_avr_demo_customer_2" model="res.partner">
+            <field name="name">Tran Thi Binh</field>
+            <field name="phone">0901000002</field>
+            <field name="email">binh.customer@avr.local</field>
+            <field name="street">88 Le Loi</field>
+            <field name="city">Da Nang</field>
+            <field name="country_id" ref="base.vn"/>
+            <field name="customer_rank">1</field>
+        </record>
+
+        <!-- Products and spare-part catalog -->
+        <record id="avr_demo_product_categ_spare" model="product.category">
+            <field name="name">AVR Demo Spare Parts</field>
+        </record>
+
+        <record id="avr_demo_product_engine_oil" model="product.product">
+            <field name="name">Engine Oil 5W-30 (Demo)</field>
+            <field name="default_code">AVR-OIL-530</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="avr_demo_product_categ_spare"/>
+            <field name="list_price">350000.0</field>
+        </record>
+
+        <record id="avr_demo_product_brake_pad" model="product.product">
+            <field name="name">Brake Pad Set (Demo)</field>
+            <field name="default_code">AVR-BRAKE-PAD</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="avr_demo_product_categ_spare"/>
+            <field name="list_price">1200000.0</field>
+        </record>
+
+        <record id="avr_demo_spare_engine_oil" model="avr.spare.part">
+            <field name="name">Engine Oil 5W-30</field>
+            <field name="product_id" ref="avr_demo_product_engine_oil"/>
+            <field name="part_number">EO-5W30-01</field>
+            <field name="brand">Castrol</field>
+            <field name="category_id" ref="avr_demo_product_categ_spare"/>
+            <field name="list_price">350000.0</field>
+        </record>
+
+        <record id="avr_demo_spare_brake_pad" model="avr.spare.part">
+            <field name="name">Brake Pad Set</field>
+            <field name="product_id" ref="avr_demo_product_brake_pad"/>
+            <field name="part_number">BP-SET-22</field>
+            <field name="brand">Brembo</field>
+            <field name="category_id" ref="avr_demo_product_categ_spare"/>
+            <field name="list_price">1200000.0</field>
+        </record>
+
+        <!-- Service catalog -->
+        <record id="avr_demo_service_diag" model="avr.service">
+            <field name="name">General Diagnostic Scan</field>
+            <field name="service_type">diagnostic</field>
+            <field name="list_price">500000.0</field>
+            <field name="duration">1.5</field>
+            <field name="description">Read ECU trouble codes and produce initial report.</field>
+        </record>
+
+        <record id="avr_demo_service_oil_change" model="avr.service">
+            <field name="name">Engine Oil Change</field>
+            <field name="service_type">maintenance</field>
+            <field name="list_price">450000.0</field>
+            <field name="duration">1.0</field>
+            <field name="description">Drain old oil, replace filter, fill new oil.</field>
+        </record>
+
+        <record id="avr_demo_service_brake_repair" model="avr.service">
+            <field name="name">Front Brake Repair</field>
+            <field name="service_type">repair</field>
+            <field name="list_price">900000.0</field>
+            <field name="duration">2.5</field>
+            <field name="description">Inspect and repair front brake components.</field>
+        </record>
+
+        <!-- Teams -->
+        <record id="avr_demo_team_inspection" model="avr.team">
+            <field name="name">Demo Inspection Team</field>
+            <field name="team_type">inspection</field>
+            <field name="leader_id" ref="user_avr_supervisor_demo"/>
+            <field name="member_ids" eval="[
+                Command.link(ref('user_avr_supervisor_demo')),
+                Command.link(ref('user_avr_technician_demo'))
+            ]"/>
+            <field name="notes">Team for inspection and diagnosis demo flow.</field>
+        </record>
+
+        <record id="avr_demo_team_mechanical" model="avr.team">
+            <field name="name">Demo Mechanical Team</field>
+            <field name="team_type">mechanical</field>
+            <field name="leader_id" ref="user_avr_supervisor_demo"/>
+            <field name="member_ids" eval="[Command.link(ref('user_avr_technician_demo'))]"/>
+            <field name="notes">Team for repair and maintenance demo flow.</field>
+        </record>
+
+        <!-- Vehicles -->
+        <record id="avr_demo_vehicle_1" model="avr.vehicle">
+            <field name="customer_id" ref="partner_avr_demo_customer_1"/>
+            <field name="brand">Toyota</field>
+            <field name="model">Vios</field>
+            <field name="make">Toyota</field>
+            <field name="year">2021</field>
+            <field name="fuel_type">petrol</field>
+            <field name="vin_number">VINAVRDEMO0001</field>
+            <field name="registration_no">51H-123.45</field>
+            <field name="transmission_type">automatic</field>
+            <field name="vehicle_color">White</field>
+            <field name="notes">Returning customer vehicle for periodic maintenance.</field>
+        </record>
+
+        <record id="avr_demo_vehicle_2" model="avr.vehicle">
+            <field name="customer_id" ref="partner_avr_demo_customer_2"/>
+            <field name="brand">Honda</field>
+            <field name="model">City</field>
+            <field name="make">Honda</field>
+            <field name="year">2019</field>
+            <field name="fuel_type">petrol</field>
+            <field name="vin_number">VINAVRDEMO0002</field>
+            <field name="registration_no">43A-678.90</field>
+            <field name="transmission_type">cvt</field>
+            <field name="vehicle_color">Red</field>
+            <field name="notes">Customer reports vibration when braking.</field>
+        </record>
+
+        <record id="avr_demo_vehicle_odo_1" model="avr.vehicle.odometer">
+            <field name="vehicle_id" ref="avr_demo_vehicle_1"/>
+            <field name="date" eval="(DateTime.now() - relativedelta(months=2)).date()"/>
+            <field name="value">38250</field>
+            <field name="unit">km</field>
+            <field name="notes">Last maintenance odometer reading.</field>
+        </record>
+
+        <record id="avr_demo_vehicle_odo_2" model="avr.vehicle.odometer">
+            <field name="vehicle_id" ref="avr_demo_vehicle_2"/>
+            <field name="date" eval="(DateTime.now() - relativedelta(months=1)).date()"/>
+            <field name="value">51440</field>
+            <field name="unit">km</field>
+            <field name="notes">Reading recorded at intake.</field>
+        </record>
+
+        <!-- Bookings -->
+        <record id="avr_demo_booking_1" model="avr.booking">
+            <field name="booking_type">inspection_repair</field>
+            <field name="booking_source">website</field>
+            <field name="vehicle_source">customer</field>
+            <field name="customer_id" ref="partner_avr_demo_customer_1"/>
+            <field name="vehicle_id" ref="avr_demo_vehicle_1"/>
+            <field name="preferred_date" eval="(DateTime.now() + relativedelta(days=1)).date()"/>
+            <field name="preferred_time_slot">09:00 - 10:00</field>
+            <field name="issue_description">Periodic check and minor brake noise.</field>
+            <field name="registration_no">51H-123.45</field>
+            <field name="vin_number">VINAVRDEMO0001</field>
+            <field name="brand">Toyota</field>
+            <field name="model_name">Vios</field>
+            <field name="fuel_type">petrol</field>
+            <field name="transmission_type">automatic</field>
+            <field name="state">confirmed</field>
+            <field name="receptionist_id" ref="user_avr_receptionist_demo"/>
+        </record>
+
+        <record id="avr_demo_booking_2" model="avr.booking">
+            <field name="booking_type">repair_only</field>
+            <field name="booking_source">walk_in</field>
+            <field name="vehicle_source">customer</field>
+            <field name="customer_id" ref="partner_avr_demo_customer_2"/>
+            <field name="vehicle_id" ref="avr_demo_vehicle_2"/>
+            <field name="preferred_date" eval="(DateTime.now() - relativedelta(days=1)).date()"/>
+            <field name="preferred_time_slot">14:00 - 15:00</field>
+            <field name="issue_description">Brake pedal vibration and squeaking noise.</field>
+            <field name="registration_no">43A-678.90</field>
+            <field name="vin_number">VINAVRDEMO0002</field>
+            <field name="brand">Honda</field>
+            <field name="model_name">City</field>
+            <field name="fuel_type">petrol</field>
+            <field name="transmission_type">cvt</field>
+            <field name="state">in_progress</field>
+            <field name="receptionist_id" ref="user_avr_receptionist_demo"/>
+        </record>
+
+        <!-- Job cards -->
+        <record id="avr_demo_job_card_inspection_1" model="avr.job.card">
+            <field name="booking_id" ref="avr_demo_booking_1"/>
+            <field name="job_card_type">inspection</field>
+            <field name="inspection_state">in_review</field>
+            <field name="customer_id" ref="partner_avr_demo_customer_1"/>
+            <field name="vehicle_id" ref="avr_demo_vehicle_1"/>
+            <field name="inspection_report_type">classic</field>
+            <field name="type_of_inspection">full</field>
+            <field name="inspection_template_id" ref="advance_vehicle_repair.avr_insp_template_classic"/>
+            <field name="inspection_charges">300000.0</field>
+            <field name="inspection_charge_type">fixed</field>
+            <field name="inspected_by" ref="user_avr_supervisor_demo"/>
+            <field name="team_id" ref="avr_demo_team_inspection"/>
+            <field name="technician_id" ref="user_avr_technician_demo"/>
+            <field name="supervisor_id" ref="user_avr_supervisor_demo"/>
+            <field name="inspection_line_ids" eval="[
+                (0, 0, {'sequence': 10, 'part': 'Body &amp; Paintwork (Exterior)', 'category': 'exterior', 'condition': 'ok', 'notes': 'No visible damage.'}),
+                (0, 0, {'sequence': 20, 'part': 'Brakes (Front &amp; Rear)', 'category': 'under_vehicle', 'condition': 'attention', 'notes': 'Front pads near wear limit.'}),
+                (0, 0, {'sequence': 30, 'part': 'Transmission / Differential', 'category': 'transmission', 'condition': 'ok', 'notes': 'No leakage found.'})
+            ]"/>
+            <field name="internal_notes">Recommend front brake service in next visit.</field>
+        </record>
+
+        <record id="avr_demo_job_card_repair_1" model="avr.job.card">
+            <field name="booking_id" ref="avr_demo_booking_2"/>
+            <field name="job_card_type">repair</field>
+            <field name="repair_state">in_diagnosis</field>
+            <field name="customer_id" ref="partner_avr_demo_customer_2"/>
+            <field name="vehicle_id" ref="avr_demo_vehicle_2"/>
+            <field name="repair_type">with_services</field>
+            <field name="team_id" ref="avr_demo_team_mechanical"/>
+            <field name="technician_id" ref="user_avr_technician_demo"/>
+            <field name="supervisor_id" ref="user_avr_supervisor_demo"/>
+            <field name="service_ids" eval="[
+                (0, 0, {'service_id': ref('avr_demo_service_diag'), 'team_id': ref('avr_demo_team_inspection'), 'technician_id': ref('user_avr_technician_demo'), 'quantity': 1.0, 'unit_price': 500000.0}),
+                (0, 0, {'service_id': ref('avr_demo_service_brake_repair'), 'team_id': ref('avr_demo_team_mechanical'), 'technician_id': ref('user_avr_technician_demo'), 'quantity': 1.0, 'unit_price': 900000.0})
+            ]"/>
+            <field name="spare_part_ids" eval="[
+                (0, 0, {'product_id': ref('avr_demo_product_brake_pad'), 'description': 'Brake Pad Set (front)', 'quantity': 1.0, 'unit_price': 1200000.0}),
+                (0, 0, {'product_id': ref('avr_demo_product_engine_oil'), 'description': 'Engine Oil 5W-30', 'quantity': 1.0, 'unit_price': 350000.0})
+            ]"/>
+            <field name="customer_observations">Customer needs vehicle ready before weekend.</field>
+        </record>
+
+        <!-- Project and tasks -->
+        <record id="avr_demo_project" model="project.project">
+            <field name="name">AVR Demo Workshop Board</field>
+        </record>
+
+        <record id="avr_demo_task_1" model="project.task">
+            <field name="name">Perform diagnostic scan</field>
+            <field name="project_id" ref="avr_demo_project"/>
+            <field name="job_card_id" ref="avr_demo_job_card_repair_1"/>
+            <field name="team_id" ref="avr_demo_team_inspection"/>
+            <field name="service_id" ref="avr_demo_service_diag"/>
+            <field name="user_ids" eval="[Command.link(ref('user_avr_technician_demo'))]"/>
+            <field name="partner_id" ref="partner_avr_demo_customer_2"/>
+            <field name="description">Run OBD scan and verify brake-related faults.</field>
+        </record>
+
+        <record id="avr_demo_task_2" model="project.task">
+            <field name="name">Replace front brake pads</field>
+            <field name="project_id" ref="avr_demo_project"/>
+            <field name="job_card_id" ref="avr_demo_job_card_repair_1"/>
+            <field name="team_id" ref="avr_demo_team_mechanical"/>
+            <field name="service_id" ref="avr_demo_service_brake_repair"/>
+            <field name="user_ids" eval="[Command.link(ref('user_avr_technician_demo'))]"/>
+            <field name="partner_id" ref="partner_avr_demo_customer_2"/>
+            <field name="description">Replace worn pads and test brake performance.</field>
+        </record>
+
+    </data>
+</odoo>

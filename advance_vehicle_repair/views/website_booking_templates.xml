@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Booking Page Layout ────────────────────────────────────────────────── -->
+    <template id="avr_website_booking_page" name="Vehicle Repair Booking">
+        <t t-call="website.layout">
+            <div id="wrap" class="avr-booking-page">
+                <div class="container py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-10">
+
+                            <!-- Header -->
+                            <div class="avr-booking-header text-center mb-5">
+                                <div class="avr-logo-icon mb-3">
+                                    <i class="fa fa-car fa-2x"/>
+                                </div>
+                                <h2 class="fw-bold">Vehicle Repair Booking</h2>
+                                <p class="text-muted">Schedule your vehicle service appointment online</p>
+                                <a href="#booking-form" class="btn btn-warning btn-sm">
+                                    BOOK A SERVICE
+                                </a>
+                            </div>
+
+                            <!-- Progress steps -->
+                            <div class="avr-steps d-flex justify-content-center mb-5">
+                                <div class="avr-step active">
+                                    <div class="avr-step-num">1</div>
+                                    <span>Vehicle Info</span>
+                                </div>
+                                <div class="avr-step-line"/>
+                                <div class="avr-step">
+                                    <div class="avr-step-num">2</div>
+                                    <span>Booking Details</span>
+                                </div>
+                                <div class="avr-step-line"/>
+                                <div class="avr-step">
+                                    <div class="avr-step-num">3</div>
+                                    <span>Your Details</span>
+                                </div>
+                                <div class="avr-step-line"/>
+                                <div class="avr-step">
+                                    <div class="avr-step-num">4</div>
+                                    <span>Confirmation</span>
+                                </div>
+                            </div>
+
+                            <form id="booking-form" action="/vehicle-repair/booking/submit" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <!-- Step 1: Vehicle Details -->
+                                <div class="avr-form-section mb-4">
+                                    <h5 class="avr-section-title mb-3">
+                                        <span class="avr-step-badge">1</span>
+                                        Vehicle Details
+                                        <small class="text-muted d-block mt-1 ms-4">
+                                            Enter your vehicle information to help for booking
+                                        </small>
+                                    </h5>
+                                    <div class="card border-0 shadow-sm p-4">
+                                        <div class="row g-3">
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label fw-semibold">
+                                                    Vehicle Ownership <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="vehicle_source" id="new_vehicle"
+                                                               value="new" checked="1"/>
+                                                        <label class="form-check-label" for="new_vehicle">
+                                                            New Vehicle Entry
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="vehicle_source" id="existing_vehicle"
+                                                               value="existing"/>
+                                                        <label class="form-check-label" for="existing_vehicle">
+                                                            Vehicle from Customer
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Registered Vehicle</label>
+                                                <select name="vehicle_id" class="form-select">
+                                                    <option value="">-- Select Vehicle --</option>
+                                                    <t t-foreach="vehicles" t-as="v">
+                                                        <option t-att-value="v.id">
+                                                            <t t-out="v.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">
+                                                    Registration Number <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="text" name="registration_no"
+                                                       class="form-control" placeholder="e.g. FG45 HLM"
+                                                       required="required"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Brand <span class="text-danger">*</span></label>
+                                                <input type="text" name="brand" class="form-control"
+                                                       placeholder="e.g. Petrol" required="required"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Fuel Type</label>
+                                                <select name="fuel_type" class="form-select">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="petrol">Petrol</option>
+                                                    <option value="diesel">Diesel</option>
+                                                    <option value="hybrid_gasoline">Hybrid Gasoline</option>
+                                                    <option value="hybrid_diesel">Hybrid Diesel</option>
+                                                    <option value="electric">Electric</option>
+                                                    <option value="lpg">LPG</option>
+                                                    <option value="cng">CNG</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">VIN Number</label>
+                                                <input type="text" name="vin_number"
+                                                       class="form-control" placeholder="VIN"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Transmission Type</label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="transmission_type" value="manual" checked="1"/>
+                                                        <label class="form-check-label">Manual</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="transmission_type" value="automatic"/>
+                                                        <label class="form-check-label">Automatic</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="transmission_type" value="cvt"/>
+                                                        <label class="form-check-label">CVT</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Booking Details -->
+                                <div class="avr-form-section mb-4">
+                                    <h5 class="avr-section-title mb-3">
+                                        <span class="avr-step-badge">2</span>
+                                        Booking Details
+                                        <small class="text-muted d-block mt-1 ms-4">
+                                            Select service type and preferred appointment date
+                                        </small>
+                                    </h5>
+                                    <div class="card border-0 shadow-sm p-4">
+                                        <div class="row g-3">
+                                            <!-- Service type cards -->
+                                            <div class="col-12">
+                                                <label class="form-label fw-semibold">Service Type</label>
+                                                <div class="row g-3">
+                                                    <div class="col-12 col-md-4">
+                                                        <label class="avr-service-card w-100">
+                                                            <input type="radio" name="booking_type"
+                                                                   value="inspection_only" class="d-none"/>
+                                                            <div class="avr-service-card-inner text-center p-3">
+                                                                <i class="fa fa-search fa-2x mb-2 text-muted"/>
+                                                                <div class="fw-bold">Inspection Only</div>
+                                                                <small class="text-muted">Full vehicle diagnosis</small>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-4">
+                                                        <label class="avr-service-card w-100 selected">
+                                                            <input type="radio" name="booking_type"
+                                                                   value="repair_only" class="d-none" checked="1"/>
+                                                            <div class="avr-service-card-inner text-center p-3">
+                                                                <i class="fa fa-wrench fa-2x mb-2 text-warning"/>
+                                                                <div class="fw-bold">Repair Only</div>
+                                                                <small class="text-muted">Fix specified issues</small>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-12 col-md-4">
+                                                        <label class="avr-service-card w-100">
+                                                            <input type="radio" name="booking_type"
+                                                                   value="inspection_repair" class="d-none"/>
+                                                            <div class="avr-service-card-inner text-center p-3">
+                                                                <i class="fa fa-cogs fa-2x mb-2 text-muted"/>
+                                                                <div class="fw-bold">Inspect + Repair</div>
+                                                                <small class="text-muted">Full service package</small>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">
+                                                    Preferred Date <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="date" name="preferred_date"
+                                                       class="form-control" required="required"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Preferred Time Slot</label>
+                                                <select name="preferred_time_slot" class="form-select">
+                                                    <option value="08:00 - 10:11">08:00 – 10:11</option>
+                                                    <option value="10:00 - 12:00">10:00 – 12:00</option>
+                                                    <option value="12:00 - 14:00">12:00 – 14:00</option>
+                                                    <option value="14:00 - 16:00">14:00 – 16:00</option>
+                                                    <option value="16:00 - 18:00">16:00 – 18:00</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label">
+                                                    Describe the Issue / Required Services
+                                                </label>
+                                                <textarea name="issue_description" rows="3"
+                                                          class="form-control"
+                                                          placeholder="e.g. Vehicle Not Start"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Your Details -->
+                                <div class="avr-form-section mb-4">
+                                    <h5 class="avr-section-title mb-3">
+                                        <span class="avr-step-badge">3</span>
+                                        Your Details
+                                        <small class="text-muted d-block mt-1 ms-4">
+                                            Contact and address information for the booking
+                                        </small>
+                                    </h5>
+                                    <div class="card border-0 shadow-sm p-4">
+                                        <div class="row g-3">
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">
+                                                    Request By <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="text" name="customer_name"
+                                                       class="form-control"
+                                                       t-att-value="request.env.user.name if request.env.user.id != request.env.ref('base.public_user').id else ''"
+                                                       required="required"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Mobile Number</label>
+                                                <input type="tel" name="phone" class="form-control"
+                                                       placeholder="+1 555-555-5555"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">
+                                                    Email Address <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="email" name="email" class="form-control"
+                                                       placeholder="admin@sample.com" required="required"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Street 1</label>
+                                                <input type="text" name="street" class="form-control"
+                                                       placeholder="Silver Oak Street No 1"/>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label class="form-label">Street 2</label>
+                                                <input type="text" name="street2" class="form-control"
+                                                       placeholder="Opposite Street 2"/>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <label class="form-label">City</label>
+                                                <input type="text" name="city" class="form-control"
+                                                       placeholder="Frances"/>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <label class="form-label">State</label>
+                                                <input type="text" name="state" class="form-control"
+                                                       placeholder="California (US)"/>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <label class="form-label">ZIP / Pincode</label>
+                                                <input type="text" name="zip_code" class="form-control"
+                                                       placeholder="99424"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="text-end mt-4">
+                                    <button type="submit" class="btn btn-warning btn-lg px-5 fw-bold">
+                                        Submit Booking Request
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ── Booking Confirmed Page ─────────────────────────────────────────────── -->
+    <template id="avr_booking_confirmed" name="Booking Confirmed">
+        <t t-call="website.layout">
+            <div id="wrap" class="avr-booking-page">
+                <div class="container py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-7">
+
+                            <!-- Header with logo -->
+                            <div class="avr-booking-header text-center mb-4">
+                                <div class="avr-logo-icon mb-2">
+                                    <i class="fa fa-car fa-2x"/>
+                                </div>
+                                <h2 class="fw-bold">Vehicle Repair Booking</h2>
+                                <p class="text-muted">Schedule your vehicle service appointment online</p>
+                            </div>
+
+                            <!-- Confirmation card -->
+                            <div class="card border-0 shadow text-center p-5">
+                                <div class="avr-confirmed-icon mb-3">
+                                    <i class="fa fa-check-circle fa-4x text-success"/>
+                                </div>
+                                <h3 class="fw-bold mb-2">Booking Confirmed!</h3>
+                                <p class="text-muted">Your booking has been submitted successfully.</p>
+                                <div class="avr-booking-ref my-3">
+                                    <span class="badge bg-warning text-dark fs-6 px-4 py-2">
+                                        <t t-out="booking.name"/>
+                                    </span>
+                                </div>
+                                <div class="d-flex justify-content-center gap-3 mt-4">
+                                    <a t-att-href="'/vehicle-repair/booking/' + str(booking.id)"
+                                       class="btn btn-outline-warning">
+                                        &#x27F6; View Your Booking
+                                    </a>
+                                    <a href="/vehicle-repair/booking" class="btn btn-light">
+                                        My Bookings
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ── My Bookings Portal ─────────────────────────────────────────────────── -->
+    <template id="avr_portal_my_bookings" name="My Vehicle Bookings">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">My Bookings</t>
+            </t>
+            <t t-if="not bookings">
+                <div class="alert alert-warning">
+                    No vehicle repair bookings found.
+                </div>
+            </t>
+            <t t-if="bookings">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Date</th>
+                                    <th>Vehicle</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="bookings" t-as="b">
+                                    <tr>
+                                        <td>
+                                            <a t-att-href="'/vehicle-repair/booking/' + str(b.id)">
+                                                <t t-out="b.name"/>
+                                            </a>
+                                        </td>
+                                        <td><t t-out="b.booking_date"/></td>
+                                        <td>
+                                            <t t-out="b.brand"/> /
+                                            <t t-out="b.model_name"/>
+                                            (<t t-out="b.registration_no"/>)
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                <t t-out="dict(b._fields['booking_type'].selection).get(b.booking_type, b.booking_type)"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-attf-class="badge #{
+                                                'bg-info' if b.state == 'new' else
+                                                'bg-warning text-dark' if b.state == 'confirmed' else
+                                                'bg-primary' if b.state == 'in_progress' else
+                                                'bg-success' if b.state == 'completed' else
+                                                'bg-danger'}">
+                                                <t t-out="b.state.replace('_',' ').title()"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

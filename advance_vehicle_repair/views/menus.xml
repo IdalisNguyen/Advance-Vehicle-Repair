@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Root menu ─────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_root"
+              name="Vehicles Repair"
+              sequence="50"
+              web_icon="advance_vehicle_repair,static/description/vehicle_repair_icon.png"
+              groups="advance_vehicle_repair.group_avr_technician"/>
+
+    <!-- ── Dashboard ─────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_dashboard"
+              name="Dashboard"
+              parent="menu_avr_root"
+              action="action_avr_dashboard"
+              sequence="10"
+              groups="advance_vehicle_repair.group_avr_receptionist"/>
+
+    <!-- ── Bookings ───────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_bookings"
+              name="Bookings"
+              parent="menu_avr_root"
+              action="action_avr_booking"
+              sequence="20"
+              groups="advance_vehicle_repair.group_avr_receptionist"/>
+
+    <!-- ── Job Cards ──────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_job_cards"
+              name="Job Cards"
+              parent="menu_avr_root"
+              sequence="30"
+              groups="advance_vehicle_repair.group_avr_technician"/>
+
+    <menuitem id="menu_avr_inspection_job_cards"
+              name="Inspections"
+              parent="menu_avr_job_cards"
+              action="action_avr_inspection_job_card"
+              sequence="10"/>
+
+    <menuitem id="menu_avr_repair_job_cards"
+              name="Repairs"
+              parent="menu_avr_job_cards"
+              action="action_avr_repair_job_card"
+              sequence="20"/>
+
+    <!-- ── Customers ──────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_customers"
+              name="Customers"
+              parent="menu_avr_root"
+              sequence="40"
+              groups="advance_vehicle_repair.group_avr_receptionist"/>
+
+    <menuitem id="menu_avr_customer_list"
+              name="Customers"
+              parent="menu_avr_customers"
+              action="base.action_partner_form"
+              sequence="10"/>
+
+    <!-- ── Teams ──────────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_teams"
+              name="Teams"
+              parent="menu_avr_root"
+              action="action_avr_team"
+              sequence="50"
+              groups="advance_vehicle_repair.group_avr_supervisor"/>
+
+    <!-- ── Tasks ──────────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_tasks"
+              name="Tasks"
+              parent="menu_avr_root"
+              action="action_avr_tasks"
+              sequence="60"
+              groups="advance_vehicle_repair.group_avr_technician"/>
+
+    <!-- ── Spare Parts ────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_spare_parts"
+              name="Spare Parts"
+              parent="menu_avr_root"
+              action="action_avr_spare_part"
+              sequence="70"
+              groups="advance_vehicle_repair.group_avr_supervisor"/>
+
+    <!-- ── Services ───────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_services"
+              name="Services"
+              parent="menu_avr_root"
+              action="action_avr_service"
+              sequence="80"
+              groups="advance_vehicle_repair.group_avr_supervisor"/>
+
+    <!-- ── Vehicles ───────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_vehicles"
+              name="Vehicles"
+              parent="menu_avr_root"
+              action="action_avr_vehicle"
+              sequence="90"
+              groups="advance_vehicle_repair.group_avr_receptionist"/>
+
+    <!-- ── Configurations ────────────────────────────────────────────────────── -->
+    <menuitem id="menu_avr_config"
+              name="Configurations"
+              parent="menu_avr_root"
+              sequence="100"
+              groups="advance_vehicle_repair.group_avr_manager"/>
+
+    <menuitem id="menu_avr_config_inspection_templates"
+              name="Inspection Templates"
+              parent="menu_avr_config"
+              action="action_avr_inspection_template"
+              sequence="10"/>
+
+    <menuitem id="menu_avr_config_teams"
+              name="Repair Teams"
+              parent="menu_avr_config"
+              action="action_avr_team"
+              sequence="20"/>
+
+    <menuitem id="menu_avr_config_services"
+              name="Services"
+              parent="menu_avr_config"
+              action="action_avr_service"
+              sequence="30"/>
+
+    <menuitem id="menu_avr_config_spare_parts"
+              name="Spare Parts Catalogue"
+              parent="menu_avr_config"
+              action="action_avr_spare_part"
+              sequence="40"/>
+
+</odoo>

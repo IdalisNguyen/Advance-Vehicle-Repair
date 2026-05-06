@@ -14,7 +14,7 @@
         - Dashboard with KPIs and charts
         - Role-based access: Manager, Supervisor, Receptionist, Technician
     """,
-    'author': 'Custom Development',
+    "author": "Idalis Nguyen",
     'website': 'https://www.odoo.com/apps',
     'license': 'LGPL-3',
     'price': 89.0,

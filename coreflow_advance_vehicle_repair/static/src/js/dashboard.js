@@ -283,13 +283,13 @@ class AvrDashboard extends Component {
 
     // ── Navigation helpers ────────────────────────────────────────────────────
     goToBookings() {
-        this.action.doAction("advance_vehicle_repair.action_avr_booking");
+        this.action.doAction("coreflow_advance_vehicle_repair.action_avr_booking");
     }
     goToInspections() {
-        this.action.doAction("advance_vehicle_repair.action_avr_inspection_job_card");
+        this.action.doAction("coreflow_advance_vehicle_repair.action_avr_inspection_job_card");
     }
     goToRepairs() {
-        this.action.doAction("advance_vehicle_repair.action_avr_repair_job_card");
+        this.action.doAction("coreflow_advance_vehicle_repair.action_avr_repair_job_card");
     }
     newBooking() {
         this.action.doAction({

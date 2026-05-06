@@ -48,11 +48,11 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'advance_vehicle_repair/static/src/css/dashboard.css',
-            'advance_vehicle_repair/static/src/js/dashboard.js',
+            'coreflow_advance_vehicle_repair/static/src/css/dashboard.css',
+            'coreflow_advance_vehicle_repair/static/src/js/dashboard.js',
         ],
         'website.assets_frontend': [
-            'advance_vehicle_repair/static/src/css/website_booking.css',
+            'coreflow_advance_vehicle_repair/static/src/css/website_booking.css',
         ],
     },
     'installable': True,

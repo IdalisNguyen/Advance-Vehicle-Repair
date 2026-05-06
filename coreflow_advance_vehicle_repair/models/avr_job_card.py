@@ -93,11 +93,11 @@ class AvrJobCard(models.Model):
     technician_id = fields.Many2one(
         'res.users', string='Technician', tracking=True,
         domain=lambda self: self._domain_avr_group_users(
-            'advance_vehicle_repair.group_avr_technician'))
+            'coreflow_advance_vehicle_repair.group_avr_technician'))
     supervisor_id = fields.Many2one(
         'res.users', string='Supervisor', tracking=True,
         domain=lambda self: self._domain_avr_group_users(
-            'advance_vehicle_repair.group_avr_supervisor'))
+            'coreflow_advance_vehicle_repair.group_avr_supervisor'))
     inspected_by = fields.Many2one('res.users', string='Inspected By')
     team_id = fields.Many2one('avr.team', string='Repair Team')
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
@@ -292,7 +292,7 @@ class AvrJobCard(models.Model):
     def action_send_approval_mail(self):
         self.ensure_one()
         template = self.env.ref(
-            'advance_vehicle_repair.email_template_job_card_approval', raise_if_not_found=False)
+            'coreflow_advance_vehicle_repair.email_template_job_card_approval', raise_if_not_found=False)
         if template:
             template.send_mail(self.id, force_send=True)
             self.approval_mail_sent = True
@@ -323,7 +323,7 @@ class AvrJobCard(models.Model):
 
     def _avr_generic_service_product(self):
         tmpl = self.env.ref(
-            'advance_vehicle_repair.product_tmpl_avr_generic_service',
+            'coreflow_advance_vehicle_repair.product_tmpl_avr_generic_service',
             raise_if_not_found=False,
         )
         if not tmpl:

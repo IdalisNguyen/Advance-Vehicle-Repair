@@ -14,7 +14,7 @@ class AvrWebsiteBooking(http.Controller):
                 ('customer_id', '=', partner.id)
             ])
         return request.render(
-            'advance_vehicle_repair.avr_website_booking_page',
+            'coreflow_advance_vehicle_repair.avr_website_booking_page',
             {'vehicles': vehicles}
         )
 
@@ -98,7 +98,7 @@ class AvrWebsiteBooking(http.Controller):
         booking = env['avr.booking'].sudo().create(booking_vals)
 
         return request.render(
-            'advance_vehicle_repair.avr_booking_confirmed',
+            'coreflow_advance_vehicle_repair.avr_booking_confirmed',
             {'booking': booking}
         )
 
@@ -110,7 +110,7 @@ class AvrWebsiteBooking(http.Controller):
         if not booking.exists():
             return request.not_found()
         return request.render(
-            'advance_vehicle_repair.avr_booking_confirmed',
+            'coreflow_advance_vehicle_repair.avr_booking_confirmed',
             {'booking': booking}
         )
 
@@ -122,6 +122,6 @@ class AvrWebsiteBooking(http.Controller):
             ('customer_id', '=', partner.id)
         ], order='booking_date desc')
         return request.render(
-            'advance_vehicle_repair.avr_portal_my_bookings',
+            'coreflow_advance_vehicle_repair.avr_portal_my_bookings',
             {'bookings': bookings}
         )

@@ -11,7 +11,7 @@
             <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
             <field name="groups_id" eval="[
                 Command.link(ref('base.group_user')),
-                Command.link(ref('advance_vehicle_repair.group_avr_receptionist'))
+                Command.link(ref('coreflow_advance_vehicle_repair.group_avr_receptionist'))
             ]"/>
         </record>
 
@@ -23,7 +23,7 @@
             <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
             <field name="groups_id" eval="[
                 Command.link(ref('base.group_user')),
-                Command.link(ref('advance_vehicle_repair.group_avr_supervisor'))
+                Command.link(ref('coreflow_advance_vehicle_repair.group_avr_supervisor'))
             ]"/>
         </record>
 
@@ -35,7 +35,7 @@
             <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
             <field name="groups_id" eval="[
                 Command.link(ref('base.group_user')),
-                Command.link(ref('advance_vehicle_repair.group_avr_technician'))
+                Command.link(ref('coreflow_advance_vehicle_repair.group_avr_technician'))
             ]"/>
         </record>
 
@@ -237,7 +237,7 @@
             <field name="vehicle_id" ref="avr_demo_vehicle_1"/>
             <field name="inspection_report_type">classic</field>
             <field name="type_of_inspection">full</field>
-            <field name="inspection_template_id" ref="advance_vehicle_repair.avr_insp_template_classic"/>
+            <field name="inspection_template_id" ref="coreflow_advance_vehicle_repair.avr_insp_template_classic"/>
             <field name="inspection_charges">300000.0</field>
             <field name="inspection_charge_type">fixed</field>
             <field name="inspected_by" ref="user_avr_supervisor_demo"/>
